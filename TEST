@@ -1,0 +1,71 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using SAP.Middleware.Connector;
+using SapMiddle;
+
+public partial class NewtypeRFC1 : System.Web.UI.Page
+{
+    #region 註解說明
+    /*
+    示列代碼如下:
+    SapDataBuilder _builder=new SapDataBuilder("RFCName");
+    //設置sap伺服器登陸信息
+    _builder.setSapServerInfo("xxxx","xxx",...);
+    //添加輸入參數信息
+    _builder.appendInputData("name",IList);
+    //添加輸入DataTable信息
+    _builder.appendInputData("tableName");
+    //添加簡單輸入類型
+    _builder.appendInputData(xxx);
+    //添加輸出信息
+    _build.appendOutputData(xxx);
+    //20141224 appendOutputData 修改成 appendOutputData_POD("Name","Type")
+    //添加完輸入/輸出參數信息后獲取xml字串數據,供後續call fun使用
+    string xmlData=_build.getXmlData();
+    ////////////////////////////////////////////
+    具體類型信息請再VS中的MetaData中查看,VS的IntelliCode會告訴使用者所需的類型定義,這裡不再敖述.	
+    */
+    #endregion
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        SapMiddle.SapOutputData _output2 = null;
+        string _result2 = string.Empty;
+        //設置sap伺服器登陸信息
+        SapDataBuilder _Sapbuilder = new SapDataBuilder("Z_RFC_PT_XXXX");
+        _Sapbuilder.setSapServerInfo("H0", "XXX", "0987654321", "ZF", "10.1.11.11", "10", "00");
+        //添加輸入參數信息
+        _Sapbuilder.appendInputData("ABSENCETYPE", "");
+        _Sapbuilder.appendInputData("DOCUMENTID", "");
+        _Sapbuilder.appendInputData("EMPLOYEENUMBER", "T130275");
+        _Sapbuilder.appendInputData("ENQUEUE", "X");
+        _Sapbuilder.appendInputData("FORMID", "");
+        _Sapbuilder.appendInputData("OPERATION", "S");
+        _Sapbuilder.appendInputData("VALIDITYBEGIN", "2014/11/14");
+        _Sapbuilder.appendInputData("VALIDITYEND", "2014/11/14");
+        _Sapbuilder.appendInputData("STARTTIME", "080000");
+        _Sapbuilder.appendInputData("ENDTIME", "170000");
+        //添加輸出信息
+        _Sapbuilder.appendOutputData_POD("RETURNTYPE", "string");
+        _Sapbuilder.appendOutputData_POD("RETURNMESSAGE", "string");
+        //添加完輸入/輸出參數信息后獲取xml字串數據,供後續call fun使用
+
+        string xmlData = _Sapbuilder.getXmlData();
+
+        _result2 = SapMiddle.SapHelper.SapCallRFC(xmlData, out _output2);
+
+        if ((_output2.OutputSimple != null) || (string.IsNullOrEmpty(_output2.OutputSimple.ToString())))
+        {
+            foreach (SapMiddle.SapOutputSimpleData _data in _output2.OutputSimple)
+            {
+                Response.Write("FieldName:" + _data.fieldName + Environment.NewLine +
+                               "FieldType:" + _data.fieldType + Environment.NewLine +
+                               "Value:" + _data.value);
+            }
+        }
+    }
+}

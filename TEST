@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,28 +9,8 @@ using SapMiddle;
 
 public partial class NewtypeRFC1 : System.Web.UI.Page
 {
-    #region 註解說明
-    /*
-    示列代碼如下:
-    SapDataBuilder _builder=new SapDataBuilder("RFCName");
-    //設置sap伺服器登陸信息
-    _builder.setSapServerInfo("xxxx","xxx",...);
-    //添加輸入參數信息
-    _builder.appendInputData("name",IList);
-    //添加輸入DataTable信息
-    _builder.appendInputData("tableName");
-    //添加簡單輸入類型
-    _builder.appendInputData(xxx);
-    //添加輸出信息
-    _build.appendOutputData(xxx);
-    //20141224 appendOutputData 修改成 appendOutputData_POD("Name","Type")
-    //添加完輸入/輸出參數信息后獲取xml字串數據,供後續call fun使用
-    string xmlData=_build.getXmlData();
-    ////////////////////////////////////////////
-    具體類型信息請再VS中的MetaData中查看,VS的IntelliCode會告訴使用者所需的類型定義,這裡不再敖述.	
-    */
-    #endregion
-
+#region 註解說明
+#endregion
     protected void Page_Load(object sender, EventArgs e)
     {
         SapMiddle.SapOutputData _output2 = null;
